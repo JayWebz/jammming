@@ -16,7 +16,7 @@ const Spotify = {
 		// If both values exist
 		if (accessTokenValue && expiresInValue) {
 			// Set access token and expiration time
-			let accessToken = accessTokenValue[1];
+			accessToken = accessTokenValue[1];
 			let expiresIn = expiresInValue[1];
 			// Set access token to expire at value for expiration time
 			window.setTimeout(() => accessToken = '', expiresIn * 1000);
@@ -65,21 +65,20 @@ const Spotify = {
 		const accessToken = Spotify.getAccessToken();
 		
 		console.log('accessToken: ' + accessToken);
-		// Returns 'Undefined'
 
 		const headers = {Authorization: `Bearer ${accessToken}`};
 		let userID = '';
 		// Make request to return users Spotify username
-		return fetch(`https://cors-anywhere.herokuapp.com/https://www.spotify.com/v1/me`, {
+		return fetch(`https://www.spotify.com/v1/me`, {
 			headers: headers
 		}).then(response => {
 			return response.json();
 		}, networkError => console.log("Cannot access User ID")
 		).then(jsonResponse => {
-			let userID = jsonResponse.id;
+			userID = jsonResponse.id;
 			console.log(userID);
 			// Use returned user ID to create new playlist for user
-			return fetch(`https://cors-anywhere.herokuapp.com/https://www.spotify.com/v1/users/${userID}/playlists`, {
+			return fetch(`https://www.spotify.com/v1/users/${userID}/playlists`, {
 				headers: headers,
 				method: 'POST',
 				body: JSON.stringify({name: playlistName})
@@ -90,7 +89,7 @@ const Spotify = {
 				let playlistID = jsonResponse.id;
 				console.log("playlistID: " + playlistID);
 				// Set the URIs parameter to an array of tracks passed in method
-				return fetch(`https://cors-anywhere.herokuapp.com/https://www.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {
+				return fetch(`https://www.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {
 					headers: headers,
 					method: 'POST',
 					body: JSON.stringify({uris: trackURIs})
