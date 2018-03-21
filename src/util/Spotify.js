@@ -1,5 +1,6 @@
 const SpotifyClientID = 'b935ce51f1bc421bb405d5fc7ae4e439';
-const SpotifyRedirectURI = 'http://localhost:3000/';
+//const SpotifyRedirectURI = 'http://localhost:3000/';
+const SpotifyRedirectURI = 'http://iplayyoulisten.surge.sh/';
 let accessToken;
 
 const Spotify = {
@@ -69,7 +70,7 @@ const Spotify = {
 		const headers = {Authorization: `Bearer ${accessToken}`};
 		let userID = '';
 		// Make request to return users Spotify username
-		return fetch(`https://cors-anywhere.herokuapp.com/https://www.spotify.com/v1/me`, {
+		return fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/me`, {
 			headers: headers
 		}).then(response => {
 			return response.json();
@@ -78,7 +79,7 @@ const Spotify = {
 			userID = jsonResponse.id;
 			console.log(userID);
 			// Use returned user ID to create new playlist for user
-			return fetch(`https://cors-anywhere.herokuapp.com/https://www.spotify.com/v1/users/${userID}/playlists`, {
+			return fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${userID}/playlists`, {
 				headers: headers,
 				method: 'POST',
 				body: JSON.stringify({name: playlistName})
@@ -89,7 +90,7 @@ const Spotify = {
 				let playlistID = jsonResponse.id;
 				console.log("playlistID: " + playlistID);
 				// Set the URIs parameter to an array of tracks passed in method
-				return fetch(`https://cors-anywhere.herokuapp.com/https://www.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {
+				return fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {
 					headers: headers,
 					method: 'POST',
 					body: JSON.stringify({uris: trackURIs})
